@@ -4,12 +4,12 @@ jerseyCommon = "3.1.6"
 kotlin = "1.9.24"
 kotlinxCoroutinesTest = "1.5.2"
 ksp = "1.9.24-1.0.20"
-agp = "8.4.1"
+agp = "8.13.0"
 
 minSdk = "23"
 mockkAndroid = "1.12.0"
-targetSdk = "34"
-compileSdk = "34"
+targetSdk = "36"
+compileSdk = "36"
 
 composeCompiler = "1.5.14"
 composeBOM = "2024.05.00"
@@ -17,7 +17,7 @@ composeViewModel = "2.8.0"
 accompanist = "0.34.0"
 
 coroutines = "1.8.1"
-sqlDelight = "2.0.2"
+sqlDelight = "2.1.0"
 dokka = "1.9.20"
 moshi = "1.15.1"
 googleService = "4.4.1"
@@ -26,7 +26,8 @@ koin = "3.5.6"
 retrofit = "2.11.0"
 okhttp = "4.12.0"
 bouncyCastle = "1.78.1"
-sqlCipher = "4.5.4"
+sqlCipher = "4.10.0"
+sqlLiteFramework = "2.2.0"
 multibase = "1.1.1"
 json = "20220924"
 timber = "5.0.1"
@@ -66,7 +67,7 @@ sqlDelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", 
 sqlDelight-adapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqlDelight" }
 sqlDelight-test = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
 sqlDelight-async = { module = "app.cash.sqldelight:async-extensions", version.ref = "sqlDelight" }
-sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version = "3.8.10.2" }
+sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version = "3.50.3.0" }
 
 androidx-lifecycleLiveData = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycleViewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
@@ -148,7 +149,8 @@ firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx"
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 
 bouncyCastle = { module = "org.bouncycastle:bcprov-jdk18on", version.ref = "bouncyCastle" }
-sqlCipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "sqlCipher" }
+sqlCipher = { module = "net.zetetic:sqlcipher-android", version.ref = "sqlCipher" }
+sqliteFramework = { module = "androidx.sqlite:sqlite-framework", version = "sqlLiteFramework" }
 relinker = { module = "com.getkeepsafe.relinker:relinker", version.ref = "relinker" }
 mulitbase = { module = "com.github.multiformats:java-multibase", version.ref = "multibase" }
 jerseyCommon = { module = "org.glassfish.jersey.core:jersey-common", version.ref = "jerseyCommon" }

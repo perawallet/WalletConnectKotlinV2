@@ -104,6 +104,9 @@ dependencies {
 
     ksp(libs.moshi.ksp)
     implementation(libs.bundles.sqlDelight)
+    implementation(libs.sqlCipher)
+    implementation(libs.sqliteFramework)
+    implementation(libs.relinker)
 
     testImplementation(libs.bundles.androidxTest)
     testImplementation(libs.robolectric)

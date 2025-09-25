@@ -3,14 +3,11 @@ plugins {
     id(libs.plugins.kotlin.android.get().pluginId)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
-    id("signing-config")
-//    id("io.sentry.android.gradle") version "3.12.0"
 }
 
 android {
     namespace = "com.walletconnect.sample.wallet"
     compileSdk = COMPILE_SDK
-    // hash of all sdk versions from Versions.kt
 
     defaultConfig {
         applicationId = "com.walletconnect.sample.wallet"
@@ -29,12 +26,6 @@ android {
         getByName("release") {
             manifestPlaceholders["pathPrefix"] = "/wallet_release"
             buildConfigField("String", "WALLET_APP_LINK", "\"https://web3modal-laboratory-git-chore-kotlin-assetlinks-walletconnect1.vercel.app/wallet_release\"")
-        }
-
-        getByName("internal") {
-            manifestPlaceholders["pathPrefix"] = "/wallet_internal"
-            buildConfigField("String", "WALLET_APP_LINK", "\"https://web3modal-laboratory-git-chore-kotlin-assetlinks-walletconnect1.vercel.app/wallet_internal\"")
-
         }
 
         getByName("debug") {
@@ -111,9 +102,9 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
     // CameraX
-    implementation("androidx.camera:camera-camera2:1.2.0")
-    implementation("androidx.camera:camera-lifecycle:1.2.0")
-    implementation("androidx.camera:camera-view:1.0.0-alpha31")
+    implementation("androidx.camera:camera-camera2:1.5.0")
+    implementation("androidx.camera:camera-lifecycle:1.5.0")
+    implementation("androidx.camera:camera-view:1.5.0")
 
     // Zxing
     implementation("com.google.zxing:core:3.5.0")
@@ -125,10 +116,6 @@ dependencies {
     debugImplementation(project(":core:android"))
     debugImplementation(project(":product:web3wallet"))
     debugImplementation(project(":protocol:notify"))
-
-    internalImplementation(project(":core:android"))
-    internalImplementation(project(":product:web3wallet"))
-    internalImplementation(project(":protocol:notify"))
 
     releaseImplementation(platform("com.walletconnect:android-bom:$BOM_VERSION"))
     releaseImplementation("com.walletconnect:android-core")

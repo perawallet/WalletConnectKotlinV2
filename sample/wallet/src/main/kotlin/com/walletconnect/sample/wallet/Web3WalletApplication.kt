@@ -3,7 +3,6 @@ package com.walletconnect.sample.wallet
 import android.app.Application
 import android.content.ClipData
 import android.content.ClipboardManager
-import com.google.firebase.appdistribution.FirebaseAppDistribution
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -104,8 +103,6 @@ class Web3WalletApplication : Application() {
             Firebase.crashlytics.recordException(error.throwable)
             logger.error(error.throwable.stackTraceToString())
         }
-
-        FirebaseAppDistribution.getInstance().updateIfNewReleaseAvailable()
 
         registerAccount()
         initializeBeagle()

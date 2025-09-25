@@ -18,12 +18,12 @@ import com.walletconnect.android.internal.common.di.AndroidCommonDITags
 import com.walletconnect.android.internal.common.di.DatabaseConfig
 import com.walletconnect.android.internal.common.di.baseStorageModule
 import com.walletconnect.android.internal.common.di.deleteDatabases
-import com.walletconnect.android.sdk.core.AndroidCoreDatabase
+import com.walletconnect.android.sdk.storage.data.dao.AndroidCoreDatabase
 import com.walletconnect.foundation.util.Logger
 import com.walletconnect.util.randomBytes
 import com.walletconnect.utils.Empty
-import net.sqlcipher.database.SQLiteDatabaseHook
-import net.sqlcipher.database.SupportFactory
+import net.zetetic.database.sqlcipher.SQLiteDatabaseHook
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.core.scope.Scope
@@ -159,12 +159,12 @@ fun getSupportFactory(
     passphrase: ByteArray,
     hook: SQLiteDatabaseHook?,
     clearPassphrase: Boolean
-): SupportFactory {
-    loadSqlCipherLibrary(context)
-    return SupportFactory(passphrase, hook, clearPassphrase)
+): SupportOpenHelperFactory {
+    loadLibrary(context)
+    return SupportOpenHelperFactory(passphrase, hook, clearPassphrase)
 }
 
-private fun loadSqlCipherLibrary(context: Context) {
+private fun loadLibrary(context: Context) {
     val libraryName = "sqlcipher"
     try {
         System.loadLibrary(libraryName)

@@ -16,7 +16,7 @@ import com.walletconnect.android.internal.common.storage.pairing.PairingStorageR
 import com.walletconnect.android.internal.common.storage.push_messages.PushMessagesRepository
 import com.walletconnect.android.internal.common.storage.rpc.JsonRpcHistory
 import com.walletconnect.android.internal.common.storage.verify.VerifyContextStorageRepository
-import com.walletconnect.android.sdk.core.AndroidCoreDatabase
+import com.walletconnect.android.sdk.storage.data.dao.AndroidCoreDatabase
 import com.walletconnect.android.sdk.storage.data.dao.EventDao
 import com.walletconnect.android.sdk.storage.data.dao.JsonRpcHistoryDao
 import com.walletconnect.android.sdk.storage.data.dao.MetaData

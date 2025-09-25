@@ -4,7 +4,6 @@ plugins {
     id(libs.plugins.kotlin.kapt.get().pluginId)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
-    id("signing-config")
 }
 
 android {
@@ -29,12 +28,6 @@ android {
         getByName("release") {
             manifestPlaceholders["pathPrefix"] = "/lab_release"
             buildConfigField("String", "LAB_APP_LINK", "\"https://web3modal-laboratory-git-chore-kotlin-assetlinks-walletconnect1.vercel.app/lab_release\"")
-        }
-
-        getByName("internal") {
-            manifestPlaceholders["pathPrefix"] = "/lab_internal"
-            buildConfigField("String", "LAB_APP_LINK", "\"https://web3modal-laboratory-git-chore-kotlin-assetlinks-walletconnect1.vercel.app/lab_internal\"")
-
         }
 
         getByName("debug") {
@@ -91,9 +84,6 @@ dependencies {
 
     debugImplementation(project(":core:android"))
     debugImplementation(project(":product:web3modal"))
-
-    internalImplementation(project(":core:android"))
-    internalImplementation(project(":product:web3modal"))
 
     releaseImplementation(platform("com.walletconnect:android-bom:$BOM_VERSION"))
     releaseImplementation("com.walletconnect:android-core")

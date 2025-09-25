@@ -1,5 +1,6 @@
 package com.walletconnect.android.internal.common.storage.pairing
 
+import app.cash.sqldelight.db.QueryResult
 import com.walletconnect.android.internal.common.model.Expiry
 import com.walletconnect.android.internal.common.model.Pairing
 import com.walletconnect.foundation.common.model.Topic
@@ -18,7 +19,7 @@ interface PairingStorageRepositoryInterface {
 
     fun setRequestReceived(topic: Topic)
 
-    fun updateExpiry(topic: Topic, expiry: Expiry)
+    fun updateExpiry(topic: Topic, expiry: Expiry) : QueryResult<Long>
 
     fun getPairingOrNullByTopic(topic: Topic): Pairing?
 }

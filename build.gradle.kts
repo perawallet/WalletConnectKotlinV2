@@ -25,6 +25,10 @@ allprojects {
 
     configurations.configureEach {
         resolutionStrategy.eachDependency {
+            // Force Kotlin version consistency
+            if (requested.group == "org.jetbrains.kotlin") {
+                useVersion(libs.versions.kotlin.get())
+            }
             if (requested.group == "androidx.navigation" && requested.name == "navigation-compose") {
                 useVersion(libs.versions.androidxNavigation.get())
             }

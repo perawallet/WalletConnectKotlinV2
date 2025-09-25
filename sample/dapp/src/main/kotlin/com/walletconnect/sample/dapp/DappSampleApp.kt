@@ -1,7 +1,6 @@
 package com.walletconnect.sample.dapp
 
 import android.app.Application
-import com.google.firebase.appdistribution.FirebaseAppDistribution
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.walletconnect.android.Core
@@ -40,7 +39,5 @@ class DappSampleApp : Application() {
         ) { error ->
             Timber.e(tag(this), error.throwable.stackTraceToString())
         }
-
-        FirebaseAppDistribution.getInstance().updateIfNewReleaseAvailable()
     }
 }

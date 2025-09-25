@@ -80,9 +80,8 @@ android {
 sqldelight {
     databases {
         create("AndroidCoreDatabase") {
-            packageName.set("com.walletconnect.android.sdk.core")
+            packageName.set("com.walletconnect.android.sdk.storage.data.dao")
             schemaOutputDirectory.set(file("src/main/sqldelight/databases"))
-//            generateAsync.set(true) // TODO: Enable once all repository methods have been converted to suspend functions
             verifyMigrations.set(true)
         }
     }
@@ -96,7 +95,7 @@ dependencies {
     implementation(libs.scarlet.android)
     implementation(libs.bundles.sqlDelight)
     //noinspection UseTomlInstead
-    api("net.zetetic:android-database-sqlcipher:4.5.4@aar")
+    api(libs.sqlCipher)
     implementation(libs.relinker)
     api(libs.androidx.security)
     api(libs.koin.android)

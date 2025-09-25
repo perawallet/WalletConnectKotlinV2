@@ -6,7 +6,7 @@ import app.cash.sqldelight.db.SqlSchema
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import com.walletconnect.android.internal.common.di.DatabaseConfig
 import com.walletconnect.android.internal.common.di.baseStorageModule
-import com.walletconnect.android.sdk.core.AndroidCoreDatabase
+import com.walletconnect.android.sdk.storage.data.dao.AndroidCoreDatabase
 import com.walletconnect.utils.Empty
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
