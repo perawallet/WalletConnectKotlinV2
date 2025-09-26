@@ -1,10 +1,23 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    `maven-publish`
     id(libs.plugins.javaLibrary.get().pluginId)
     id(libs.plugins.kotlin.jvm.get().pluginId)
     alias(libs.plugins.google.ksp)
     id("publish-module-java")
+}
+
+afterEvaluate {
+    publishing {
+        val bad = publications.findByName("mavenJvm")
+        if (bad != null) publications.remove(bad)
+
+        publications.withType<MavenPublication>().configureEach {
+            groupId = (findProperty("group") as? String) ?: "com.github.perawallet"
+            version = (findProperty("version") as? String) ?: "v1.0.0"
+        }
+    }
 }
 
 project.apply {
