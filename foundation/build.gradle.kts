@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id(libs.plugins.javaLibrary.get().pluginId)
     id(libs.plugins.kotlin.jvm.get().pluginId)
+    id("maven-publish")
     alias(libs.plugins.google.ksp)
-    `maven-publish`
 }
 
 java {

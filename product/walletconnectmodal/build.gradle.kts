@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.paparazzi)
     id("jacoco-report")
-    `maven-publish`
+    id("maven-publish")
 }
 
 android {

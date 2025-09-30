@@ -1,7 +1,7 @@
 import org.gradle.api.JavaVersion
 
 //Latest versions
-const val BOM_VERSION = "1.0.3"
+const val BOM_VERSION = "1.0.4"
 const val FOUNDATION_VERSION = BOM_VERSION
 const val CORE_VERSION =  BOM_VERSION
 const val SIGN_VERSION =  BOM_VERSION

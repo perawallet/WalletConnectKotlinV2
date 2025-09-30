@@ -2,7 +2,7 @@ plugins {
     id("com.android.library")
     id(libs.plugins.kotlin.android.get().pluginId)
     alias(libs.plugins.google.ksp)
-    `maven-publish`
+    id("maven-publish")
 }
 
 android {

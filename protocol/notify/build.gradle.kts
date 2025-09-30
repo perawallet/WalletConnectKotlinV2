@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.sqlDelight)
     alias(libs.plugins.google.ksp)
     id("jacoco-report")
-    `maven-publish`
+    id("maven-publish")
 }
 
 android {

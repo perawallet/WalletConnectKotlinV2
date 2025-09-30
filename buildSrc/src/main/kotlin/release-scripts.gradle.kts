@@ -3,13 +3,12 @@ import java.util.Locale
 import kotlin.reflect.full.safeCast
 
 // Example ./gradlew releaseAllSDKs -Ptype=local
-// Example ./gradlew releaseAllSDKs -Ptype=sonatype
 tasks.register("releaseAllSDKs") {
     doLast {
         project.findProperty("type")
             ?.run(String::class::safeCast)
             ?.run {
-                println("Converting parameter to an supported ReleaseType value")
+                println("Converting parameter to a supported ReleaseType value")
                 ReleaseType.valueOf(this.uppercase(Locale.getDefault()))
             }?.let { releaseType ->
                 generateListOfModuleTasks(releaseType).forEach { task ->
@@ -43,17 +42,16 @@ fun compileListOfSDKs(): List<Triple<String, String?, String>> = mutableListOf(
     Triple("product", "walletconnectmodal", "android"),
 ).apply {
     // The BOM has to be last artifact
-    add(Triple("core", "bom", "jvm"))
+    add(Triple("bom", null, "jvm"))
 }
 
 // This extension function will determine which task to run based on the type passed
 fun List<Triple<String, String?, String>>.extractListOfPublishingTasks(type: ReleaseType): List<Task> = map { (parentModule, childModule, env) ->
+    // Updated publication names to match new setup
     val task = when {
-        env == "jvm" && type == ReleaseType.LOCAL -> "${publishJvmRoot}MavenLocal"
-        env == "jvm" && type == ReleaseType.SONATYPE -> "${publishJvmRoot}SonatypeRepository"
-        env == "android" && type == ReleaseType.LOCAL -> "${publishAndroidRoot}MavenLocal"
-        env == "android" && type == ReleaseType.SONATYPE -> "${publishAndroidRoot}SonatypeRepository"
-        else -> throw Exception("Unknown Type or Env")
+        env == "jvm" && type == ReleaseType.LOCAL -> "publishReleasePublicationToMavenLocal"
+        env == "android" && type == ReleaseType.LOCAL -> "publishReleasePublicationToMavenLocal"
+        else -> throw Exception("Only LOCAL publishing is supported for JitPack. Use JitPack for remote publishing.")
     }
 
     val module = if (childModule != null) {
@@ -65,9 +63,6 @@ fun List<Triple<String, String?, String>>.extractListOfPublishingTasks(type: Rel
     module.tasks.getByName(task)
 }
 
-private val publishJvmRoot = "publishMavenJvmPublicationTo"
-private val publishAndroidRoot = "publishReleasePublicationTo"
-
 enum class ReleaseType {
-    LOCAL, SONATYPE
+    LOCAL  // Only LOCAL is supported now - JitPack handles remote publishing
 }

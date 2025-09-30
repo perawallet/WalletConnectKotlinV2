@@ -3,7 +3,7 @@ plugins {
     id(libs.plugins.kotlin.android.get().pluginId)
     alias(libs.plugins.google.ksp)
     id("jacoco-report")
-    `maven-publish`
+    id("maven-publish")
 }
 
 android {

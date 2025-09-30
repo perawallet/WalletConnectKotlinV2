@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("release-scripts")
     id("version-bump")
-    `maven-publish`
+    id("maven-publish")
 }
 
 allprojects {
