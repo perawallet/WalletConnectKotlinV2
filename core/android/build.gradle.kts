@@ -125,6 +125,8 @@ dependencies {
 }
 
 afterEvaluate {
+    publishing.publications.removeIf { it.name == "android" }
+
     publishing {
         publications {
             create<MavenPublication>("release") {
