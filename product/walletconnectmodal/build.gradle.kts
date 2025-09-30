@@ -61,13 +61,6 @@ android {
     tasks.withType(Test::class.java) {
         jvmArgs("-XX:+AllowRedefinitionToAddDeleteMethods")
     }
-
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
 }
 
 dependencies {
@@ -102,7 +95,7 @@ dependencies {
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("android") {
+            create<MavenPublication>("release") {
                 from(components["release"])
 
                 groupId = "com.github.perawallet"

@@ -44,13 +44,6 @@ android {
     buildFeatures {
         buildConfig = true
     }
-
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
-    }
 }
 
 sqldelight {
@@ -86,7 +79,7 @@ dependencies {
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("android") {
+            create<MavenPublication>("release") {
                 from(components["release"])
 
                 groupId = "com.github.perawallet"
