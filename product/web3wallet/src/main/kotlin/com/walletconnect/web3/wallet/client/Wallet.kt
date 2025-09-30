@@ -8,7 +8,6 @@ import java.net.URI
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
-@Deprecated("com.walletconnect.web3.wallet.client.Wallet has been deprecated. Please use com.reown.walletkit.client.Wallet instead from - https://github.com/reown-com/reown-kotlin")
 object Wallet {
 
     sealed interface Listeners {
@@ -258,7 +257,6 @@ object Wallet {
         }
 
         data class Session(
-            @Deprecated("Pairing topic is deprecated")
             val pairingTopic: String,
             val topic: String,
             val expiry: Long,

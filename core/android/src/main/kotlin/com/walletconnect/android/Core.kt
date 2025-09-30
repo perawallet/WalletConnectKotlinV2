@@ -30,9 +30,7 @@ object Core {
             val verifyUrl: String? = null
         ) : Model()
 
-        @Deprecated(message = "DeletedPairing has been deprecated. It will be removed soon.")
         data class DeletedPairing(val topic: String, val reason: String) : Model()
-        @Deprecated(message = "ExpiredPairing has been deprecated. It will be removed soon.")
         data class ExpiredPairing(val pairing: Pairing) : Model()
 
         data class PairingState(val isPairingState: Boolean) : Model()
@@ -44,7 +42,6 @@ object Core {
             val relayProtocol: String,
             val relayData: String?,
             val uri: String,
-            @Deprecated("isActive has been deprecated. It will be removed soon.")
             val isActive: Boolean,
             val registeredMethods: String
         ) : Model()
@@ -133,7 +130,6 @@ object Core {
                 ) : Model()
             }
 
-            @Deprecated("Use SessionAuthenticate instead")
             data class AuthRequest(
                 val id: Long,
                 val pairingTopic: String,

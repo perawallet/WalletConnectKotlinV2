@@ -47,7 +47,6 @@ class CoreProtocol(private val koinApp: KoinApplication = wcKoinApp) : CoreInter
     override val PairingController: PairingControllerInterface = PairingController(koinApp)
     override var Relay = RelayClient(koinApp)
 
-    @Deprecated(message = "Replaced with Push")
     override val Echo: PushInterface = PushClient
     override val Push: PushInterface = PushClient
     override val Verify: VerifyInterface = VerifyClient(koinApp)
@@ -57,7 +56,6 @@ class CoreProtocol(private val koinApp: KoinApplication = wcKoinApp) : CoreInter
         plantTimber()
     }
 
-    @Deprecated("com.walletconnect.android.CoreClient has been deprecated. Please use com.reown.android.CoreClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun setDelegate(delegate: CoreInterface.Delegate) {
         Pairing.setDelegate(delegate)
     }
@@ -66,7 +64,6 @@ class CoreProtocol(private val koinApp: KoinApplication = wcKoinApp) : CoreInter
         val instance = CoreProtocol()
     }
 
-    @Deprecated("com.walletconnect.android.CoreClient has been deprecated. Please use com.reown.android.CoreClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun initialize(
         metaData: Core.Model.AppMetaData,
         relayServerUrl: String,
@@ -98,7 +95,6 @@ class CoreProtocol(private val koinApp: KoinApplication = wcKoinApp) : CoreInter
         }
     }
 
-    @Deprecated("com.walletconnect.android.CoreClient has been deprecated. Please use com.reown.android.CoreClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun initialize(
         application: Application,
         projectId: String,

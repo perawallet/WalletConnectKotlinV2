@@ -2,14 +2,8 @@ plugins {
     id("com.android.library")
     id(libs.plugins.kotlin.android.get().pluginId)
     alias(libs.plugins.google.ksp)
-    id("publish-module-android")
     id("jacoco-report")
-}
-
-project.apply {
-    extra[KEY_PUBLISH_ARTIFACT_ID] = WEB_3_WALLET
-    extra[KEY_PUBLISH_VERSION] = WEB_3_WALLET_VERSION
-    extra[KEY_SDK_NAME] = "web3wallet"
+    `maven-publish`
 }
 
 android {
@@ -23,7 +17,7 @@ android {
             minCompileSdk = MIN_SDK
         }
 
-        buildConfigField(type = "String", name = "SDK_VERSION", value = "\"${requireNotNull(extra.get(KEY_PUBLISH_VERSION))}\"")
+        buildConfigField(type = "String", name = "SDK_VERSION", value = "\"${WEB_3_WALLET_VERSION}\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -33,6 +27,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "${rootDir.path}/gradle/proguard-rules/sdk-rules.pro", "${projectDir}/web3wallet-rules.pro")
         }
     }
+
     lint {
         abortOnError = true
         ignoreWarnings = true
@@ -43,6 +38,7 @@ android {
         sourceCompatibility = jvmVersion
         targetCompatibility = jvmVersion
     }
+
     kotlinOptions {
         jvmTarget = jvmVersion.toString()
         freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.time.ExperimentalTime"
@@ -51,17 +47,60 @@ android {
     buildFeatures {
         buildConfig = true
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
 
-    debugImplementation(project(":core:android"))
-    debugImplementation(project(":protocol:sign"))
-    debugImplementation(project(":protocol:auth"))
+    api(project(":core:android"))
+    api(project(":protocol:sign"))
+    api(project(":protocol:auth"))
+}
 
-    releaseImplementation("com.walletconnect:android-core:$CORE_VERSION")
-    releaseImplementation("com.walletconnect:sign:$SIGN_VERSION")
-    releaseImplementation("com.walletconnect:auth:$AUTH_VERSION")
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+
+                groupId = "com.github.perawallet"
+                artifactId = "web3wallet"
+                version = WEB_3_WALLET_VERSION
+
+                pom {
+                    name.set("Web3Wallet")
+                    description.set("WalletConnect Web3Wallet SDK for Android")
+                    url.set("https://github.com/perawallet/WalletConnectKotlinV2")
+
+                    licenses {
+                        license {
+                            name.set("Apache License 2.0")
+                            url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set("walletconnect")
+                            name.set("WalletConnect")
+                        }
+                    }
+
+                    scm {
+                        connection.set("scm:git:git://github.com/perawallet/WalletConnectKotlinV2.git")
+                        developerConnection.set("scm:git:ssh://github.com/perawallet/WalletConnectKotlinV2.git")
+                        url.set("https://github.com/perawallet/WalletConnectKotlinV2")
+                    }
+                }
+            }
+        }
+    }
 }

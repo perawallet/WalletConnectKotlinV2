@@ -9,7 +9,6 @@ import java.net.URI
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
-@Deprecated("com.walletconnect.sign.client.SignClient has been deprecated. Please use com.reown.sign.client.SignClient instead from - https://github.com/reown-com/reown-kotlin")
 object Sign {
 
     sealed interface Listeners {
@@ -19,10 +18,6 @@ object Sign {
         }
     }
 
-    @Deprecated(
-        message = "ConnectionType for the relay is moved to CoreClient",
-        replaceWith = ReplaceWith(expression = "ConnectionType", imports = ["com.walletconnect.android.relay"])
-    )
     enum class ConnectionType {
         AUTOMATIC, MANUAL
     }
@@ -105,7 +100,6 @@ object Sign {
             ) : Namespace()
         }
 
-        @Deprecated(message = "RelayProtocolOptions is deprecated")
         data class RelayProtocolOptions(val protocol: String, val data: String? = null) : Model()
 
         data class Pairing(val topic: String, val metaData: Core.Model.AppMetaData?) : Model()

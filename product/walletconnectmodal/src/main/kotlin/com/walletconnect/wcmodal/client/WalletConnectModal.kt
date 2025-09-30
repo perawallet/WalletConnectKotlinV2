@@ -24,10 +24,6 @@ object WalletConnectModal {
         fun onSessionRejected(rejectedSession: Modal.Model.RejectedSession)
         fun onSessionUpdate(updatedSession: Modal.Model.UpdatedSession)
 
-        @Deprecated(
-            message = "Use onSessionEvent(Modal.Model.Event) instead. Using both will result in duplicate events.",
-            replaceWith = ReplaceWith(expression = "onSessionEvent(sessionEvent)")
-        )
         fun onSessionEvent(sessionEvent: Modal.Model.SessionEvent)
         fun onSessionEvent(sessionEvent: Modal.Model.Event) {}
         fun onSessionExtend(session: Modal.Model.Session)
@@ -164,10 +160,6 @@ object WalletConnectModal {
         _sessionParams = sessionParams
     }
 
-    @Deprecated(
-        message = "Replaced with the same name method but onSuccess callback returns a Pairing URL",
-        replaceWith = ReplaceWith(expression = "fun connect(connect: Modal.Params.Connect, onSuccess: (String) -> Unit, onError: (Modal.Model.Error) -> Unit)")
-    )
     fun connect(
         connect: Modal.Params.Connect,
         onSuccess: () -> Unit,

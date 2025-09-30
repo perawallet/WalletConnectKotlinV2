@@ -1,21 +1,17 @@
 import org.gradle.api.JavaVersion
 
-const val KEY_PUBLISH_VERSION = "PUBLISH_VERSION"
-const val KEY_PUBLISH_ARTIFACT_ID = "PUBLISH_ARTIFACT_ID"
-const val KEY_SDK_NAME = "SDK_NAME"
-
 //Latest versions
-const val BOM_VERSION = "1.35.2"
-const val FOUNDATION_VERSION = "1.18.4"
-const val CORE_VERSION = "1.35.2"
-const val SIGN_VERSION = "2.35.2"
-const val AUTH_VERSION = "1.28.10"
-const val CHAT_VERSION = "1.0.0-beta37"
-const val NOTIFY_VERSION = "1.3.11"
-const val WEB_3_WALLET_VERSION = "1.35.2"
-const val WEB_3_MODAL_VERSION = "1.6.6"
-const val WC_MODAL_VERSION = "1.5.11"
-const val MODAL_CORE_VERSION = "1.6.6"
+const val BOM_VERSION = "1.0.3"
+const val FOUNDATION_VERSION = BOM_VERSION
+const val CORE_VERSION =  BOM_VERSION
+const val SIGN_VERSION =  BOM_VERSION
+const val AUTH_VERSION =  BOM_VERSION
+const val CHAT_VERSION =  BOM_VERSION
+const val NOTIFY_VERSION =  BOM_VERSION
+const val WEB_3_WALLET_VERSION =  BOM_VERSION
+const val WEB_3_MODAL_VERSION =  BOM_VERSION
+const val WC_MODAL_VERSION =  BOM_VERSION
+const val MODAL_CORE_VERSION =  BOM_VERSION
 
 //Artifact ids
 const val ANDROID_BOM = "android-bom"

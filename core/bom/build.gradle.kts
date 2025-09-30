@@ -1,12 +1,6 @@
 plugins {
     `java-platform`
-    id("publish-module-java")
-}
-
-project.apply {
-    extra[KEY_PUBLISH_ARTIFACT_ID] = ANDROID_BOM
-    extra[KEY_PUBLISH_VERSION] = BOM_VERSION
-    extra[KEY_SDK_NAME] = "Android BOM"
+    `maven-publish`
 }
 
 dependencies {
@@ -20,5 +14,43 @@ dependencies {
         api(project(":product:walletconnectmodal"))
         api(project(":product:web3modal"))
         api(project(":product:web3wallet"))
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            from(components["javaPlatform"])
+
+            groupId = "com.github.perawallet"
+            artifactId = "android-bom"
+            version = BOM_VERSION
+
+            pom {
+                name.set("Android BOM")
+                description.set("WalletConnect Android Bill of Materials")
+                url.set("https://github.com/perawallet/WalletConnectKotlinV2")
+
+                licenses {
+                    license {
+                        name.set("Apache License 2.0")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                    }
+                }
+
+                developers {
+                    developer {
+                        id.set("walletconnect")
+                        name.set("WalletConnect")
+                    }
+                }
+
+                scm {
+                    connection.set("scm:git:git://github.com/perawallet/WalletConnectKotlinV2.git")
+                    developerConnection.set("scm:git:ssh://github.com/perawallet/WalletConnectKotlinV2.git")
+                    url.set("https://github.com/perawallet/WalletConnectKotlinV2")
+                }
+            }
+        }
     }
 }

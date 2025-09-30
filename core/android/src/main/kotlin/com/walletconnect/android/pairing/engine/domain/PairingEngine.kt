@@ -220,7 +220,6 @@ internal class PairingEngine(
         }
     }
 
-    @Deprecated(message = "Disconnect method has been deprecated. It will be removed soon. Pairing will disconnect automatically internally.")
     fun disconnect(topic: String, onFailure: (Throwable) -> Unit) {
         if (!isPairingValid(topic)) {
             return onFailure(CannotFindSequenceForTopic("$NO_SEQUENCE_FOR_TOPIC_MESSAGE$topic"))
@@ -249,7 +248,6 @@ internal class PairingEngine(
         )
     }
 
-    @Deprecated(message = "Ping method has been deprecated. It will be removed soon.")
     fun ping(topic: String, onSuccess: (String) -> Unit, onFailure: (Throwable) -> Unit) {
         if (isPairingValid(topic)) {
             val pingPayload = PairingRpc.PairingPing(params = PairingParams.PingParams())
@@ -366,7 +364,6 @@ internal class PairingEngine(
                 }
             }.launchIn(scope)
 
-    @Deprecated(message = "This method has been deprecated. It will be removed soon.")
     private suspend fun onPairingDelete(request: WCRequest, params: PairingParams.DeleteParams) {
         val irnParams = IrnParams(Tags.PAIRING_DELETE_RESPONSE, Ttl(dayInSeconds))
         try {
@@ -388,13 +385,11 @@ internal class PairingEngine(
         }
     }
 
-    @Deprecated(message = "Ping method has been deprecated. It will be removed soon.")
     private fun onPing(request: WCRequest) {
         val irnParams = IrnParams(Tags.PAIRING_PING, Ttl(thirtySeconds))
         jsonRpcInteractor.respondWithSuccess(request, irnParams)
     }
 
-    @Deprecated(message = "Ping method has been deprecated. It will be removed soon.")
     private fun onPingSuccess(
         pingPayload: PairingRpc.PairingPing,
         onSuccess: (String) -> Unit,
@@ -453,7 +448,6 @@ internal class PairingEngine(
         }
     }
 
-    @Deprecated(message = "This method has been deprecated. It will be removed soon.")
     private fun isPairingValid(topic: String): Boolean =
         pairingRepository.getPairingOrNullByTopic(Topic(topic))?.let { pairing -> return@let pairing.isNotExpired() } ?: false
 

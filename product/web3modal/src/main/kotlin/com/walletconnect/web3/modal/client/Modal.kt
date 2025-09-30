@@ -7,7 +7,6 @@ import com.walletconnect.android.CoreInterface
 import com.walletconnect.android.cacao.SignatureInterface
 import com.walletconnect.android.internal.common.signing.cacao.Issuer
 
-@Deprecated("com.walletconnect.web3.modal.client.Wallet has been deprecated. Please use com.reown.appkit.client.Modal instead from - https://github.com/reown-com/reown-kotlin")
 object Modal {
 
     sealed interface Listeners {
@@ -48,19 +47,10 @@ object Modal {
             val expiry: Long? = null
         ) : Params()
 
-        @Deprecated(
-            message = "This has become deprecate in favor of the parameterless disconnect function",
-            level = DeprecationLevel.WARNING
-        )
         data class Disconnect(val sessionTopic: String) : Params()
 
         data class Ping(val topic: String) : Params()
 
-        @Deprecated(
-            message = "Converted to sealed class to support multiple connectors",
-            replaceWith = ReplaceWith("com.walletconnect.web3.modal.client.models.Request"),
-            level = DeprecationLevel.WARNING
-        )
         data class Request(
             val method: String,
             val params: String,
@@ -185,11 +175,6 @@ object Modal {
             ) : JsonRpcResponse()
         }
 
-        @Deprecated(
-            message = "Converted to sealed class to support multiple connectors",
-            replaceWith = ReplaceWith("com.walletconnect.web3.modal.client.models.SentRequestResult"),
-            level = DeprecationLevel.WARNING
-        )
         data class SentRequest(
             val requestId: Long,
             val sessionTopic: String,

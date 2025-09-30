@@ -3,14 +3,8 @@ plugins {
     id(libs.plugins.kotlin.android.get().pluginId)
     alias(libs.plugins.sqlDelight)
     alias(libs.plugins.google.ksp)
-    id("publish-module-android")
     id("jacoco-report")
-}
-
-project.apply {
-    extra[KEY_PUBLISH_ARTIFACT_ID] = ANDROID_CORE
-    extra[KEY_PUBLISH_VERSION] = CORE_VERSION
-    extra[KEY_SDK_NAME] = "Android Core"
+    `maven-publish`
 }
 
 android {
@@ -20,7 +14,7 @@ android {
     defaultConfig {
         minSdk = MIN_SDK
 
-        buildConfigField(type = "String", name = "SDK_VERSION", value = "\"${requireNotNull(extra.get(KEY_PUBLISH_VERSION))}\"")
+        buildConfigField(type = "String", name = "SDK_VERSION", value = "\"${CORE_VERSION}\"")
         buildConfigField("String", "PROJECT_ID", "\"${System.getenv("WC_CLOUD_PROJECT_ID") ?: ""}\"")
         buildConfigField("Integer", "TEST_TIMEOUT_SECONDS", "${System.getenv("TEST_TIMEOUT_SECONDS") ?: 30}")
 
@@ -75,6 +69,13 @@ android {
 
         registerManagedDevices()
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 sqldelight {
@@ -88,13 +89,11 @@ sqldelight {
 }
 
 dependencies {
-    debugApi(project(":foundation"))
-    releaseApi("com.walletconnect:foundation:$FOUNDATION_VERSION")
+    api(project(":foundation"))
 
     api(libs.coroutines)
     implementation(libs.scarlet.android)
     implementation(libs.bundles.sqlDelight)
-    //noinspection UseTomlInstead
     api(libs.sqlCipher)
     implementation(libs.relinker)
     api(libs.androidx.security)
@@ -123,4 +122,44 @@ dependencies {
 
     androidTestUtil(libs.androidx.testOrchestrator)
     androidTestImplementation(libs.bundles.androidxAndroidTest)
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+
+                groupId = "com.github.perawallet"
+                artifactId = "android-core"
+                version = CORE_VERSION
+
+                pom {
+                    name.set("Android Core")
+                    description.set("WalletConnect Android Core SDK")
+                    url.set("https://github.com/perawallet/WalletConnectKotlinV2")
+
+                    licenses {
+                        license {
+                            name.set("Apache License 2.0")
+                            url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set("walletconnect")
+                            name.set("WalletConnect")
+                        }
+                    }
+
+                    scm {
+                        connection.set("scm:git:git://github.com/perawallet/WalletConnectKotlinV2.git")
+                        developerConnection.set("scm:git:ssh://github.com/perawallet/WalletConnectKotlinV2.git")
+                        url.set("https://github.com/perawallet/WalletConnectKotlinV2")
+                    }
+                }
+            }
+        }
+    }
 }

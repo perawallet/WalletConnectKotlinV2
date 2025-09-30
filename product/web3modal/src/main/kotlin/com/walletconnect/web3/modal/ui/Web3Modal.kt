@@ -21,18 +21,10 @@ internal const val CHOOSE_NETWORK_KEY = "chooseNetwork"
 private const val CHOOSE_NETWORK_ARG = "{chooseNetwork}"
 private val web3ModalPath = Route.WEB3MODAL.path + "/" + CHOOSE_NETWORK_ARG
 
-@Deprecated(
-    "com.walletconnect.web3.modal.web3Modal has been deprecated. Please use com.reown.appkit.modal.ui.appKit instead from - https://github.com/reown-com/reown-kotlin",
-    ReplaceWith("appKit()")
-)
 fun NavGraphBuilder.web3Modal() {
     dialog<Web3ModalSheet>(web3ModalPath) { argument(CHOOSE_NETWORK_KEY) { type = NavType.BoolType } }
 }
 
-@Deprecated(
-    "com.walletconnect.web3.modal.openWeb3Modal has been deprecated. Please use com.reown.appkit.modal.ui.openAppKit instead from - https://github.com/reown-com/reown-kotlin",
-    ReplaceWith("openAppKit(shouldOpenChooseNetwork, onError")
-)
 @SuppressLint("RestrictedApi")
 fun NavController.openWeb3Modal(
     shouldOpenChooseNetwork: Boolean = false,
@@ -56,10 +48,6 @@ fun NavController.openWeb3Modal(
     }
 }
 
-@Deprecated(
-    "com.walletconnect.web3.modal.ui.NavGraphBuilder has been deprecated. Please use com.reown.appkit.modal.ui.NavGraphBuilder instead from - https://github.com/reown-com/reown-kotlin",
-    ReplaceWith("appKitGraph(navController")
-)
 fun NavGraphBuilder.web3ModalGraph(navController: NavController) {
     bottomSheet(
         route = web3ModalPath,

@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.core.KoinApplication
 
-@Deprecated("AuthSDK has been deprecated")
 internal class AuthProtocol(private val koinApp: KoinApplication = wcKoinApp) : AuthInterface {
     private lateinit var authEngine: AuthEngine
 
@@ -31,7 +30,6 @@ internal class AuthProtocol(private val koinApp: KoinApplication = wcKoinApp) : 
         val instance = AuthProtocol()
     }
 
-    @Deprecated("AuthSDK has been deprecated. Please use updated Web3Wallet and Sign SDKs instead.")
     @Throws(IllegalStateException::class)
     override fun initialize(params: Auth.Params.Init, onSuccess: () -> Unit, onError: (Auth.Model.Error) -> Unit) {
         if (!::authEngine.isInitialized) {
@@ -52,7 +50,6 @@ internal class AuthProtocol(private val koinApp: KoinApplication = wcKoinApp) : 
         }
     }
 
-    @Deprecated("AuthSDK has been deprecated. Please use updated Web3Wallet and Sign SDKs instead.")
     @Throws(IllegalStateException::class)
     override fun setRequesterDelegate(delegate: AuthInterface.RequesterDelegate) {
         checkEngineInitialization()
@@ -65,7 +62,6 @@ internal class AuthProtocol(private val koinApp: KoinApplication = wcKoinApp) : 
         }.launchIn(scope)
     }
 
-    @Deprecated("AuthSDK has been deprecated. Please use updated Web3Wallet and Sign SDKs instead.")
     @Throws(IllegalStateException::class)
     override fun setResponderDelegate(delegate: AuthInterface.ResponderDelegate) {
         checkEngineInitialization()
@@ -78,10 +74,6 @@ internal class AuthProtocol(private val koinApp: KoinApplication = wcKoinApp) : 
         }.launchIn(scope)
     }
 
-    @Deprecated(
-        "AuthSDK has been deprecated. Please use updated Web3Wallet and Sign SDKs instead.",
-        replaceWith = ReplaceWith("fun sessionAuthenticate(authenticate: Sign.Params.Authenticate, onSuccess: (String) -> Unit, onError: (Sign.Model.Error) -> Unit)")
-    )
     @Throws(IllegalStateException::class)
     override fun request(params: Auth.Params.Request, onSuccess: () -> Unit, onError: (Auth.Model.Error) -> Unit) {
         checkEngineInitialization()
@@ -99,10 +91,6 @@ internal class AuthProtocol(private val koinApp: KoinApplication = wcKoinApp) : 
         }
     }
 
-    @Deprecated(
-        "AuthSDK has been deprecated. Please use updated Web3Wallet and Sign SDKs instead.",
-        replaceWith = ReplaceWith("fun approveSessionAuthenticated(approve: Sign.Params.ApproveSessionAuthenticate, onSuccess: (Sign.Params.ApproveSessionAuthenticate) -> Unit, onError: (Sign.Model.Error) -> Unit)")
-    )
     @Throws(IllegalStateException::class)
     override fun respond(params: Auth.Params.Respond, onSuccess: (Auth.Params.Respond) -> Unit, onError: (Auth.Model.Error) -> Unit) {
         checkEngineInitialization()
@@ -116,10 +104,6 @@ internal class AuthProtocol(private val koinApp: KoinApplication = wcKoinApp) : 
         }
     }
 
-    @Deprecated(
-        "AuthSDK has been deprecated. Please use updated Web3Wallet and Sign SDKs instead.",
-        replaceWith = ReplaceWith("fun formatAuthMessage(formatMessage: Sign.Params.FormatMessage): String?")
-    )
     @Throws(IllegalStateException::class)
     override fun formatMessage(params: Auth.Params.FormatMessage): String? {
         checkEngineInitialization()
@@ -131,10 +115,6 @@ internal class AuthProtocol(private val koinApp: KoinApplication = wcKoinApp) : 
         }
     }
 
-    @Deprecated(
-        "AuthSDK has been deprecated. Please use updated Web3Wallet and Sign SDKs instead.",
-        replaceWith = ReplaceWith("fun decryptMessage(params: Sign.Params.DecryptMessage, onSuccess: (Sign.Model.Message) -> Unit, onError: (Sign.Model.Error) -> Unit)")
-    )
     override fun decryptMessage(params: Auth.Params.DecryptMessage, onSuccess: (Auth.Model.Message.AuthRequest) -> Unit, onError: (Auth.Model.Error) -> Unit) {
         checkEngineInitialization()
 
@@ -152,10 +132,6 @@ internal class AuthProtocol(private val koinApp: KoinApplication = wcKoinApp) : 
         }
     }
 
-    @Deprecated(
-        "AuthSDK has been deprecated. Please use updated Web3Wallet and Sign SDKs instead.",
-        replaceWith = ReplaceWith("fun getPendingAuthenticateRequests(): List<Sign.Model.SessionAuthenticate>")
-    )
     @Throws(IllegalStateException::class)
     override fun getPendingRequest(): List<Auth.Model.PendingRequest> {
         checkEngineInitialization()
@@ -163,20 +139,12 @@ internal class AuthProtocol(private val koinApp: KoinApplication = wcKoinApp) : 
         return runBlocking { authEngine.getPendingRequests().toClient() }
     }
 
-    @Deprecated(
-        "AuthSDK has been deprecated. Please use updated Web3Wallet and Sign SDKs instead.",
-        replaceWith = ReplaceWith("override fun getVerifyContext(id: Long): Sign.Model.VerifyContext?")
-    )
     @Throws(IllegalStateException::class)
     override fun getVerifyContext(id: Long): Auth.Model.VerifyContext? {
         checkEngineInitialization()
         return runBlocking { authEngine.getVerifyContext(id)?.toClient() }
     }
 
-    @Deprecated(
-        "AuthSDK has been deprecated. Please use updated Web3Wallet and Sign SDKs instead.",
-        replaceWith = ReplaceWith("override fun getListOfVerifyContexts(): List<Sign.Model.VerifyContext>")
-    )
     @Throws(IllegalStateException::class)
     override fun getListOfVerifyContexts(): List<Auth.Model.VerifyContext> {
         checkEngineInitialization()

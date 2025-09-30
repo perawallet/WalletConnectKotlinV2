@@ -3,14 +3,8 @@ plugins {
     id(libs.plugins.kotlin.android.get().pluginId)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.paparazzi)
-    id("publish-module-android")
     id("jacoco-report")
-}
-
-project.apply {
-    extra[KEY_PUBLISH_ARTIFACT_ID] = WEB_3_MODAL
-    extra[KEY_PUBLISH_VERSION] = WEB_3_MODAL_VERSION
-    extra[KEY_SDK_NAME] = "web3modal"
+    `maven-publish`
 }
 
 android {
@@ -24,7 +18,7 @@ android {
             minCompileSdk = MIN_SDK
         }
 
-        buildConfigField(type = "String", name = "SDK_VERSION", value = "\"${requireNotNull(extra.get(KEY_PUBLISH_VERSION))}\"")
+        buildConfigField(type = "String", name = "SDK_VERSION", value = "\"${WEB_3_MODAL_VERSION}\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         File("${rootDir.path}/gradle/consumer-rules").listFiles()?.let { proguardFiles ->
@@ -38,6 +32,7 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "${rootDir.path}/gradle/proguard-rules/sdk-rules.pro")
         }
     }
+
     lint {
         abortOnError = true
         ignoreWarnings = true
@@ -48,14 +43,17 @@ android {
         sourceCompatibility = jvmVersion
         targetCompatibility = jvmVersion
     }
+
     kotlinOptions {
         jvmTarget = jvmVersion.toString()
         freeCompilerArgs = freeCompilerArgs + "-opt-in=kotlin.time.ExperimentalTime"
     }
+
     buildFeatures {
         compose = true
         buildConfig = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
@@ -63,10 +61,16 @@ android {
     tasks.withType(Test::class.java) {
         jvmArgs("-XX:+AllowRedefinitionToAddDeleteMethods")
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
-
     implementation(libs.bundles.androidxAppCompat)
     implementation(libs.bundles.accompanist)
     implementation(libs.coil)
@@ -91,17 +95,53 @@ dependencies {
 
     testImplementation(libs.coroutines.test)
     testImplementation(libs.turbine)
-
-    releaseImplementation("com.walletconnect:android-core:$CORE_VERSION")
-    releaseImplementation("com.walletconnect:sign:$SIGN_VERSION")
-    releaseImplementation("com.walletconnect:modal-core:$MODAL_CORE_VERSION")
-
-    debugImplementation(project(":core:android"))
-    debugImplementation(project(":protocol:sign"))
-    debugImplementation(project(":core:modal"))
-
     testImplementation(libs.bundles.androidxTest)
 
     androidTestUtil(libs.androidx.testOrchestrator)
     androidTestImplementation(libs.bundles.androidxAndroidTest)
+
+    // Internal module dependencies
+    api(project(":core:android"))
+    api(project(":protocol:sign"))
+    api(project(":core:modal"))
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+
+                groupId = "com.github.perawallet"
+                artifactId = "web3modal"
+                version = WEB_3_MODAL_VERSION
+
+                pom {
+                    name.set("Web3Modal")
+                    description.set("WalletConnect Web3Modal SDK for Android with Compose UI")
+                    url.set("https://github.com/perawallet/WalletConnectKotlinV2")
+
+                    licenses {
+                        license {
+                            name.set("Apache License 2.0")
+                            url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set("walletconnect")
+                            name.set("WalletConnect")
+                        }
+                    }
+
+                    scm {
+                        connection.set("scm:git:git://github.com/perawallet/WalletConnectKotlinV2.git")
+                        developerConnection.set("scm:git:ssh://github.com/perawallet/WalletConnectKotlinV2.git")
+                        url.set("https://github.com/perawallet/WalletConnectKotlinV2")
+                    }
+                }
+            }
+        }
+    }
 }

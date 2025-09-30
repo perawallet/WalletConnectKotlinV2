@@ -26,7 +26,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         val instance = NotifyProtocol()
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun initialize(init: Notify.Params.Init, onError: (Notify.Model.Error) -> Unit) {
         try {
             koinApp.modules(
@@ -42,7 +41,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun setDelegate(delegate: NotifyInterface.Delegate) {
         checkEngineInitialization()
 
@@ -55,7 +53,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }.launchIn(scope)
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun subscribe(params: Notify.Params.Subscribe): Notify.Result.Subscribe {
         checkEngineInitialization()
 
@@ -68,7 +65,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun updateSubscription(params: Notify.Params.UpdateSubscription): Notify.Result.UpdateSubscription {
         checkEngineInitialization()
 
@@ -81,7 +77,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun getNotificationTypes(params: Notify.Params.GetNotificationTypes): Map<String, Notify.Model.NotificationType> {
         checkEngineInitialization()
 
@@ -90,7 +85,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun getActiveSubscriptions(params: Notify.Params.GetActiveSubscriptions): Map<String, Notify.Model.Subscription> {
         checkEngineInitialization()
 
@@ -99,7 +93,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun getNotificationHistory(params: Notify.Params.GetNotificationHistory): Notify.Result.GetNotificationHistory {
         checkEngineInitialization()
 
@@ -112,7 +105,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun deleteSubscription(params: Notify.Params.DeleteSubscription): Notify.Result.DeleteSubscription {
         checkEngineInitialization()
 
@@ -125,7 +117,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun decryptNotification(params: Notify.Params.DecryptNotification, onSuccess: (Notify.Model.Notification.Decrypted) -> Unit, onError: (Notify.Model.Error) -> Unit) {
         scope.launch {
             notifyEngine.decryptNotification(params.topic, params.encryptedMessage,
@@ -138,7 +129,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun register(params: Notify.Params.Register, onSuccess: (String) -> Unit, onError: (Notify.Model.Error) -> Unit) {
         checkEngineInitialization()
 
@@ -153,7 +143,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun isRegistered(params: Notify.Params.IsRegistered): Boolean {
         checkEngineInitialization()
 
@@ -162,7 +151,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun prepareRegistration(
         params: Notify.Params.PrepareRegistration,
         onSuccess: (Notify.Model.CacaoPayloadWithIdentityPrivateKey, String) -> Unit,
@@ -180,7 +168,6 @@ class NotifyProtocol(private val koinApp: KoinApplication = wcKoinApp) : NotifyI
         }
     }
 
-    @Deprecated("com.walletconnect.notify.client.NotifyClient has been deprecated. Please use com.reown.notify.client.NotifyClient instead from - https://github.com/reown-com/reown-kotlin")
     override fun unregister(params: Notify.Params.Unregister, onSuccess: (String) -> Unit, onError: (Notify.Model.Error) -> Unit) {
         checkEngineInitialization()
 

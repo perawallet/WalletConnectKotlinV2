@@ -3,14 +3,8 @@ plugins {
     id(libs.plugins.kotlin.android.get().pluginId)
     alias(libs.plugins.sqlDelight)
     alias(libs.plugins.google.ksp)
-    id("publish-module-android")
     id("jacoco-report")
-}
-
-project.apply {
-    extra[KEY_PUBLISH_ARTIFACT_ID] = SIGN
-    extra[KEY_PUBLISH_VERSION] = SIGN_VERSION
-    extra[KEY_SDK_NAME] = "Sign"
+    `maven-publish`
 }
 
 android {
@@ -24,21 +18,9 @@ android {
             minCompileSdk = MIN_SDK
         }
 
-        buildConfigField(
-            type = "String",
-            name = "SDK_VERSION",
-            value = "\"${requireNotNull(extra.get(KEY_PUBLISH_VERSION))}\""
-        )
-        buildConfigField(
-            "String",
-            "PROJECT_ID",
-            "\"${System.getenv("WC_CLOUD_PROJECT_ID") ?: ""}\""
-        )
-        buildConfigField(
-            "Integer",
-            "TEST_TIMEOUT_SECONDS",
-            "${System.getenv("TEST_TIMEOUT_SECONDS") ?: 10}"
-        )
+        buildConfigField(type = "String", name = "SDK_VERSION", value = "\"${SIGN_VERSION}\"")
+        buildConfigField("String", "PROJECT_ID", "\"${System.getenv("WC_CLOUD_PROJECT_ID") ?: ""}\"")
+        buildConfigField("Integer", "TEST_TIMEOUT_SECONDS", "${System.getenv("TEST_TIMEOUT_SECONDS") ?: 10}")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments += mutableMapOf("clearPackageData" to "true")
@@ -47,10 +29,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "${rootDir.path}/gradle/proguard-rules/sdk-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "${rootDir.path}/gradle/proguard-rules/sdk-rules.pro")
         }
     }
 
@@ -84,6 +63,13 @@ android {
     buildFeatures {
         buildConfig = true
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 sqldelight {
@@ -91,7 +77,6 @@ sqldelight {
         create("SignDatabase") {
             packageName.set("com.walletconnect.sign")
             schemaOutputDirectory.set(file("src/main/sqldelight/databases"))
-//            generateAsync.set(true) // TODO: Enable once all repository methods have been converted to suspend functions
             verifyMigrations.set(true)
             verifyDefinitions.set(true)
         }
@@ -99,8 +84,7 @@ sqldelight {
 }
 
 dependencies {
-    debugImplementation(project(":core:android"))
-    releaseImplementation("com.walletconnect:android-core:$CORE_VERSION")
+    api(project(":core:android"))
 
     ksp(libs.moshi.ksp)
     implementation(libs.bundles.sqlDelight)
@@ -118,4 +102,44 @@ dependencies {
 
     androidTestUtil(libs.androidx.testOrchestrator)
     androidTestImplementation(libs.bundles.androidxAndroidTest)
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+
+                groupId = "com.github.perawallet"
+                artifactId = "sign"
+                version = SIGN_VERSION
+
+                pom {
+                    name.set("Sign")
+                    description.set("WalletConnect Sign Protocol SDK")
+                    url.set("https://github.com/perawallet/WalletConnectKotlinV2")
+
+                    licenses {
+                        license {
+                            name.set("Apache License 2.0")
+                            url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set("walletconnect")
+                            name.set("WalletConnect")
+                        }
+                    }
+
+                    scm {
+                        connection.set("scm:git:git://github.com/perawallet/WalletConnectKotlinV2.git")
+                        developerConnection.set("scm:git:ssh://github.com/perawallet/WalletConnectKotlinV2.git")
+                        url.set("https://github.com/perawallet/WalletConnectKotlinV2")
+                    }
+                }
+            }
+        }
+    }
 }
