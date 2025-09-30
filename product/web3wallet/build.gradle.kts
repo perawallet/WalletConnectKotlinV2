@@ -68,7 +68,7 @@ dependencies {
 afterEvaluate {
     publishing {
         publications {
-            create<MavenPublication>("release") {
+            create<MavenPublication>("android") {
                 from(components["release"])
 
                 groupId = "com.github.perawallet"

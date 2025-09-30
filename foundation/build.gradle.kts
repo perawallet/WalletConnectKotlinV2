@@ -43,7 +43,7 @@ dependencies {
 
 publishing {
     publications {
-        create<MavenPublication>("release") {
+        create<MavenPublication>("android") {
             from(components["java"])
 
             groupId = "com.github.perawallet"

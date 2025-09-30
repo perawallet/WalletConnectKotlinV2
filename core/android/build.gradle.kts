@@ -125,11 +125,9 @@ dependencies {
 }
 
 afterEvaluate {
-    publishing.publications.removeIf { it.name == "android" }
-
     publishing {
         publications {
-            create<MavenPublication>("release") {
+            create<MavenPublication>("android") {
                 from(components["release"])
 
                 groupId = "com.github.perawallet"
